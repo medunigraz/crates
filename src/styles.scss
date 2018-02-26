@@ -1,0 +1,12 @@
+// Clarity Dependency SCSS
+@import "../node_modules/@clr/ui/src/utils/_dependencies.clarity"; // Includes light theme
+
+// Your Application Theme File
+@import "./theme.scss";
+
+// Clarity Component SCSS
+@import "../node_modules/@clr/ui/src/utils/_components.clarity";
+
+.float-right {
+    float: right;
+}

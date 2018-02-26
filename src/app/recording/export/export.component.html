@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">
+            {{ exporter.name }}
+        </h4>
+        <div class="alert alert-warning alert-sm" *ngIf="(progress$ |async)?.state === 'FAILURE'">
+            <button type="button" class="close" aria-label="Close">
+                <clr-icon aria-hidden="true" shape="close"></clr-icon>
+            </button>
+            <div class="alert-item static">
+                <span class="alert-text">
+                    {{(progress$ |async)?.info}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="progress" *ngIf="progress$ |async as progress" [ngClass]="{'success': progress.state === 'SUCCESS', 'danger': progress.state === 'FAILURE', 'loop': progress.state === 'PENDING'}">
+            <progress value="{{runStates.includes(progress.state) ? (progress.info.current / progress.info.maximum) * 100 : 100}}" max="100"></progress>
+        </div>
+        <button class="btn" (click)="sendRequest()" [disabled]="(progress$ |async)?.state === 'PENDING' || (progress$ |async)?.state === 'PROGRESS'" *ngIf="(progress$ |async)?.state !== 'SUCCESS'">
+            Request
+        </button>
+        <a class="btn btn-success" href="{{(progress$ |async)?.info}}" *ngIf="(progress$ |async)?.state === 'SUCCESS';">
+            Download
+        </a>
+    </div>
+</div>

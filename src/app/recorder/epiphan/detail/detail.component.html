@@ -1,0 +1,81 @@
+<section class="row flex-items-xs-bottom">
+    <div class="col-md-8">
+        <h1>
+            {{instance?.name}} in {{instance?.room?.properties.canonical}}
+            <span class="badge badge-success" *ngIf="instance.online">
+                <clr-icon shape="connect" class="is-solid"></clr-icon>
+                Online
+            </span>
+            <span class="badge badge-danger" *ngIf="!instance.online">
+                <clr-icon shape="disconnect"></clr-icon>
+                Offline
+            </span>
+            <span class="badge badge-blue" *ngIf="instance.provision">
+                <clr-icon shape="deploy" class="is-solid"></clr-icon>
+                Provisioned
+            </span>
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <div class="toggle-switch mt-2" *ngIf="notificationReceived">
+            <input type="checkbox" id="notification" [checked]="notification" (change)="toggleNotification()">
+            <label for="notification">Notification</label>
+        </div>
+        <div class="btn-group float-right mt-2" role="group">
+            <button class="btn" [disabled]="!instance.retention">
+                <clr-icon shape="clock"></clr-icon>
+                Retention
+            </button>
+            <button class="btn" (click)="dismiss()">
+                <clr-icon shape="window-close"></clr-icon>
+                Close
+            </button>
+        </div>
+    </div>
+</section>
+<hr/>
+<section class="row flex-items-xs-bottom">
+    <div class="col-md-12">
+        <h3>
+            Channels
+        </h3>
+    </div>
+</section>
+<hr/>
+<div class="card-columns card-columns-4">
+    <div class="card" *ngFor="let channel of channels">
+        <div class="card-header">
+            {{channel.name}}
+        </div>
+        <div class="card-footer">
+            <div class="toggle-switch">
+                <input type="checkbox" id="channel-{{channel.id}}" [checked]="channel.recording" (change)="toggleChannelRecording(channel)">
+                <label for="channel-{{channel.id}}">Recording</label>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="row flex-items-xs-bottom">
+    <div class="col-md-12">
+        <h3>
+            Sources
+        </h3>
+    </div>
+</section>
+<hr/>
+<div class="card-columns card-columns-4">
+    <div class="card" *ngFor="let source of sources" (click)="showSourceModal(source)">
+        <div class="card-img">
+            <img src="{{source.video}}">
+        </div>
+        <div class="card-img">
+            <img src="{{source.audio}}">
+        </div>
+    </div>
+</div>
+<clr-modal [(clrModalOpen)]="source" [clrModalSize]="'lg'">
+    <div class="modal-body">
+        <img src="{{source.video}}" class="thumbnail">
+        <img src="{{source.audio}}" class="thumbnail">
+    </div>
+</clr-modal>

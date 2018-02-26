@@ -1,0 +1,95 @@
+<section class="row flex-items-xs-bottom">
+    <div class="col-md-8">
+        <h1>
+            {{instance.recorder?.room?.canonical_name || 'Unknown room'}} on {{instance.created |date:'short'}}
+        </h1>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group float-right mt-2" role="group">
+            <a href="{{ instance.data }}" class="btn">
+                <clr-icon shape="download"></clr-icon>
+                Download
+            </a>
+            <button class="btn" disabled>
+                <clr-icon shape="archive"></clr-icon>
+                Archive
+            </button>
+            <button class="btn btn-danger-outline" (click)="confirmRemoveRecording()">
+                <clr-icon shape="trash"></clr-icon>
+                Delete
+            </button>
+            <button class="btn" (click)="dismiss()">
+                <clr-icon shape="window-close"></clr-icon>
+                Close
+            </button>
+        </div>
+    </div>
+</section>
+<hr/>
+<section class="row flex-items-xs-bottom">
+    <div class="col-md-12">
+        <h3>
+            Exports
+        </h3>
+    </div>
+</section>
+<hr/>
+<div class="row">
+    <recording-export *ngFor="let exporter of exporters" [recording]="instance" [exporter]="exporter"></recording-export>
+</div>
+<section class="row flex-items-xs-bottom">
+    <div class="col-md-8">
+        <h3>
+            Assets
+        </h3>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group float-right mt-2" role="group">
+            <button class="btn" (click)="assetUploadModal = true">
+                <clr-icon shape="upload"></clr-icon>
+                Upload
+            </button>
+        </div>
+    </div>
+</section>
+<hr/>
+<div class="card-columns card-columns-4">
+    <asset *ngFor="let asset of assets" [instance]="asset" (onDelete)="assetRemove($event)"></asset>
+</div>
+<clr-modal [(clrModalOpen)]="recordingRemoveModal">
+    <h3 class="modal-title">Delete recording</h3>
+    <div class="modal-body">
+        <p>Are your sure that you want to delete the recording?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="recordingRemoveModal = false">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="removeRecording()" [disabled]="removing">Delete</button>
+    </div>
+</clr-modal>
+<clr-modal [(clrModalOpen)]="assetUploadModal" [clrModalClosable]="!uploading" [clrModalStaticBackdrop]="uploading">
+    <h3 class="modal-title">Upload new asset</h3>
+    <div class="modal-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let file of assetUploadQueue">
+                <clr-icon shape="file"></clr-icon>
+                {{file.name}} ({{file.size |fileSize}})
+                <div class="progress" *ngIf="file.upload.sent">
+                    <progress max="100" value="{{ file.upload.progress }}" data-displayval="%"></progress>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning-outline" (click)="assetUploadQueue = []" *ngIf="assetUploadQueue.length > 0 && !uploading">Clear</button>
+        <label class="btn" *ngIf="!uploading">
+            <input type="file"
+                   (change)="assetSelected($event)"
+                   placeholder="Upload file"
+                   accept="*"
+                   multiple>
+            Attach Files
+        </label>
+        <button type="button" class="btn btn-outline" (click)="cancelUploadAsset()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="assetUpload()" [disabled]="assetUploadQueue.length === 0 || uploading">Upload</button>
+    </div>
+</clr-modal>

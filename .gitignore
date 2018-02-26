@@ -8,3 +8,4 @@ typings/
 .idea/
 .DS_Store
 .npmrc
+npm-debug.log

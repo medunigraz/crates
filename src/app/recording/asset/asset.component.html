@@ -1,0 +1,36 @@
+<div class="card-header">
+    {{ instance.name }}
+</div>
+<div class="card-img" *ngIf="instance.preview">
+    <img [src]="instance.preview">
+</div>
+<!--
+<div class="card-block">
+    <p class="card-text">
+    ...
+    </p>
+</div>
+-->
+<div class="card-footer">
+    <div class="progress" *ngIf="downloading" [ngClass]="{'success': downloaded}">
+        <progress [value]="downloadProgress" max="100"></progress>
+    </div>
+    <button class="btn" (click)="download()">
+        <clr-icon shape="download"></clr-icon>
+        Download
+    </button>
+    <button class="btn btn-danger-outline" (click)="assetRemoveModal = true">
+        <clr-icon shape="trash"></clr-icon>
+        Delete
+    </button>
+</div>
+<clr-modal [(clrModalOpen)]="assetRemoveModal">
+    <h3 class="modal-title">Delete asset</h3>
+    <div class="modal-body">
+        <p>Are your sure that you want to delete the asset?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="assetRemoveModal = false">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="removeAsset()">Delete</button>
+    </div>
+</clr-modal>
