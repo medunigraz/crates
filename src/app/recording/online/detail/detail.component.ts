@@ -19,6 +19,8 @@ const sortAssets = (a, b) => {
 export class DetailComponent implements OnInit {
 
   public instance: Recording;
+  public start: Date;
+  public end: Date;
   public exporters: Export[];
   public assets: Asset[];
   public recordingRemoveModal: boolean = false;
@@ -41,6 +43,12 @@ export class DetailComponent implements OnInit {
       const id = params.get('id');
       this.recordingService.get(id).subscribe((recording) => {
         this.instance = recording;
+        if (recording.start) {
+          this.start = new Date(recording.start)
+        }
+        if (recording.end) {
+          this.end = new Date(recording.end)
+        }
         this.exportService.list().subscribe((exporters) => {
           this.exporters = exporters.results;
         });

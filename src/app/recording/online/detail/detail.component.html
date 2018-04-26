@@ -26,6 +26,64 @@
     </div>
 </section>
 <hr/>
+<dl class="row">
+    <ng-container *ngIf="instance.course">
+    <dt class="col-sm-3">Module:</dt>
+    <dd class="col-sm-9">{{instance.title}}</dd>
+    <dt class="col-sm-3">Title of lesson:</dt>
+    <dd class="col-sm-9">{{instance.course.name}} ({{instance.course.semester}}S {{instance.course.year}})</dd>
+    </ng-container>
+    <ng-container *ngIf="instance.presenter">
+    <dt class="col-sm-3">Presenter:</dt>
+    <dd class="col-sm-9">
+        {{instance.presenter?.title || '' }}
+        {{instance.presenter?.first_name }}
+        {{instance.presenter?.last_name }}
+    </dd>
+    </ng-container>
+    <ng-container *ngIf="instance.recorder.room">
+    <dt class="col-sm-3">Room:</dt>
+    <dd class="col-sm-9">{{instance.recorder.room.properties.canonical || '-'}}</dd>
+    </ng-container>
+    <dt class="col-sm-3">Recorder:</dt>
+    <dd class="col-sm-9">{{instance.recorder.name || '-'}}</dd>
+    <ng-container *ngIf="instance.recorder.retention">
+    <dt class="col-sm-3">Retention:</dt>
+    <dd class="col-sm-9">{{instance.recorder.retention}}</dd>
+    </ng-container>
+    <ng-container *ngIf="start && end">
+    <dt class="col-sm-3">Recorded:</dt>
+    <dd class="col-sm-9">
+        {{start|date:'short'}} - {{end|date:'short'}}
+        ({{(end - start) / 1000|readabletime}})
+    </dd>
+    </ng-container>
+    <ng-container *ngIf="instance.info">
+    <dt class="col-sm-3">Format:</dt>
+    <dd class="col-sm-9">{{instance.info.format.format_long_name}}</dd>
+    <dt class="col-sm-3">Size:</dt>
+    <dd class="col-sm-9">{{instance.info.format.size |fileSize}}</dd>
+    <dt class="col-sm-3">Streams:</dt>
+    <dd class="col-sm-9">
+        <ul>
+            <li *ngFor="let stream of instance.info?.streams">
+                <strong>{{stream.codec_type|titlecase}}:</strong>
+                <ng-container *ngIf="stream.codec_type === 'video'">
+                {{stream.codec_name}},
+                {{stream.width}}x{{stream.height}}
+                ({{stream.display_aspect_ratio}})
+                </ng-container>
+                <ng-container *ngIf="stream.codec_type === 'audio'">
+                {{stream.codec_name}},
+                {{stream.sample_rate}}hz,
+                {{stream.channel_layout|titlecase}}
+                </ng-container>
+            </li>
+        </ul>
+    </dd>
+    </ng-container>
+
+</dl>
 <section class="row flex-items-xs-bottom">
     <div class="col-md-12">
         <h3>

@@ -8,6 +8,11 @@ export interface Recording extends Item {
   data: string;
   info: any;
   recorder: any;
+  metadata?; any;
+  start?: string;
+  end?: string;
+  course?: any | null;
+  presenter?: any | null;
 }
 
 @Injectable()

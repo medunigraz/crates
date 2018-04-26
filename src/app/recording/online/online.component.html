@@ -1,13 +1,27 @@
 <clr-datagrid (clrDgRefresh)="refresh($event)" [clrDgLoading]="loading">
     <clr-dg-column>Recorder</clr-dg-column>
     <clr-dg-column>Room</clr-dg-column>
-    <clr-dg-column>Date</clr-dg-column>
+    <clr-dg-column>Uploaded</clr-dg-column>
+    <clr-dg-column>Start</clr-dg-column>
+    <clr-dg-column>End</clr-dg-column>
+    <clr-dg-column>Module</clr-dg-column>
+    <clr-dg-column>Title of lesson</clr-dg-column>
+    <clr-dg-column>Presenter</clr-dg-column>
     <clr-dg-column>Size</clr-dg-column>
 
     <clr-dg-row *ngFor="let recording of recordings" (click)="details(recording)">
         <clr-dg-cell>{{recording.recorder?.name || '-'}}</clr-dg-cell>
-        <clr-dg-cell>{{recording.room || '-'}}</clr-dg-cell>
-        <clr-dg-cell>{{recording.created | date:'full'}}</clr-dg-cell>
+        <clr-dg-cell>{{recording.recorder.room?.properties.canonical || '-'}}</clr-dg-cell>
+        <clr-dg-cell>{{recording.created|date:'short'}}</clr-dg-cell>
+        <clr-dg-cell>{{recording.start | date:'full'}}</clr-dg-cell>
+        <clr-dg-cell>{{recording.end | date:'full'}}</clr-dg-cell>
+        <clr-dg-cell>{{recording.course?.name || '-'}}</clr-dg-cell>
+        <clr-dg-cell>{{recording.title || '-'}}</clr-dg-cell>
+        <clr-dg-cell>
+            {{recording.presenter?.title || '' }}
+            {{recording.presenter?.first_name }}
+            {{recording.presenter?.last_name }}
+        </clr-dg-cell>
         <clr-dg-cell>{{recording.info?.format?.size | fileSize}}</clr-dg-cell>
     </clr-dg-row>
 
