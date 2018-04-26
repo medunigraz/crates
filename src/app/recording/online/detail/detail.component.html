@@ -1,7 +1,7 @@
 <section class="row flex-items-xs-bottom">
     <div class="col-md-8">
         <h1>
-            {{instance.recorder?.room?.canonical_name || 'Unknown room'}} on {{instance.created |date:'short'}}
+            {{instance.recorder?.name || instance.recorder?.room?.canonical_name || 'Unknown room'}} on {{instance.created |date:'short'}}
         </h1>
     </div>
     <div class="col-md-4">
