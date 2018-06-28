@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
-  templateUrl: './recording.component.html',
-  styleUrls: ['./recording.component.scss'],
+  templateUrl: './root.component.html',
+  styleUrls: ['./root.component.scss'],
   host: {
     class: 'content-container'
   }
 })
-export class RecordingComponent implements OnInit {
+export class RootComponent implements OnInit {
 
   constructor(
     private router: Router,
@@ -16,6 +16,7 @@ export class RecordingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    /*
     console.log('router', this.route);
     console.log('route', this.route);
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -27,6 +28,7 @@ export class RecordingComponent implements OnInit {
         // this.router.navigate(['./', 'online'], { relativeTo: this.route });
       }
     });
+    */
   }
 
 }

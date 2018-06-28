@@ -6,7 +6,8 @@ import { ClarityModule } from '@clr/angular';
 
 import { UtilitiesModule } from '../utilities/utilities.module';
 
-import { RecorderComponent } from './recorder.component';
+import { RootComponent } from './root/root.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EpiphanComponent } from './epiphan/epiphan.component';
 import { EpiphanDetailComponent } from './epiphan/detail/detail.component';
 
@@ -25,14 +26,15 @@ import { RecorderRoutingModule } from './recorder.routing';
     RecorderRoutingModule
   ],
   declarations: [
-    RecorderComponent,
+    RootComponent,
+    DashboardComponent,
     EpiphanComponent,
     EpiphanDetailComponent
   ],
   providers: [
     EpiphanService,
     ChannelService,
-    SourceService,
+    SourceService
   ]
 })
 export class RecorderModule { }

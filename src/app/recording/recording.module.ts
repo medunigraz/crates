@@ -12,12 +12,14 @@ import { RecordingService } from './recording.service';
 import { AssetService } from './asset/asset.service';
 import { ExportService } from './export/export.service';
 
-import { RecordingComponent } from './recording.component';
-
+import { RootComponent } from './root/root.component';
 import { OnlineComponent } from './online/online.component';
 import { DetailComponent } from './online/detail/detail.component';
 import { ExportComponent } from './export/export.component';
 import { AssetComponent } from './asset/asset.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ArchiveComponent } from './archive/archive.component';
+import { ArchiveDetailComponent } from './archive/detail/detail.component';
 
 @NgModule({
   imports: [
@@ -28,11 +30,14 @@ import { AssetComponent } from './asset/asset.component';
     RecordingRouting
   ],
   declarations: [
-    RecordingComponent,
+    RootComponent,
     OnlineComponent,
     DetailComponent,
     ExportComponent,
-    AssetComponent
+    AssetComponent,
+    DashboardComponent,
+    ArchiveComponent,
+    ArchiveDetailComponent
   ],
   providers: [
     RecordingService,

@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  templateUrl: './recorder.component.html',
-  styleUrls: ['./recorder.component.scss'],
-  host: {
-    class: 'content-container'
-  }
+  templateUrl: './root.component.html',
+  styleUrls: ['./root.component.scss']
 })
-export class RecorderComponent implements OnInit {
+export class RootComponent implements OnInit {
+
+  @HostBinding('class') class = 'content-container';
 
   constructor(
     private router: Router,

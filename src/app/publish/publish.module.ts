@@ -6,9 +6,10 @@ import { ClarityModule } from '@clr/angular';
 
 import { UtilitiesModule } from '../utilities/utilities.module';
 
-import { PublishComponent } from './publish.component';
+import { RootComponent } from './root/root.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
-import { PublishRoutingModule } from './publish-routing.module';
+import { PublishRoutingModule } from './publish.routing';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { PublishRoutingModule } from './publish-routing.module';
     PublishRoutingModule
   ],
   declarations: [
-    PublishComponent,
+    RootComponent,
+    DashboardComponent
   ],
   providers: [
   ]

@@ -48,10 +48,20 @@
             {{channel.name}}
         </div>
         <div class="card-footer">
+            <button type="button" class="btn btn-icon btn-success" *ngIf="!channel.recording">
+                <clr-icon shape="play"></clr-icon>
+                Start
+            </button>
+            <button type="button" class="btn btn-icon btn-danger" *ngIf="channel.recording">
+                <clr-icon shape="stop"></clr-icon>
+                Stop
+            </button>
+            <!--
             <div class="toggle-switch">
                 <input type="checkbox" id="channel-{{channel.id}}" [checked]="channel.recording" (change)="toggleChannelRecording(channel)">
                 <label for="channel-{{channel.id}}">Recording</label>
             </div>
+            -->
         </div>
     </div>
 </div>
@@ -66,16 +76,16 @@
 <div class="card-columns card-columns-4">
     <div class="card" *ngFor="let source of sources" (click)="showSourceModal(source)">
         <div class="card-img">
-            <img src="{{source.video}}">
+            <img src="{{source.video_preview}}">
         </div>
         <div class="card-img">
-            <img src="{{source.audio}}">
+            <img src="{{source.audio_waveform}}">
         </div>
     </div>
 </div>
 <clr-modal [(clrModalOpen)]="source" [clrModalSize]="'lg'">
     <div class="modal-body">
-        <img src="{{source.video}}" class="thumbnail">
-        <img src="{{source.audio}}" class="thumbnail">
+        <img src="{{source.video_preview}}" class="thumbnail">
+        <img src="{{source.audio_waveform}}" class="thumbnail">
     </div>
 </clr-modal>

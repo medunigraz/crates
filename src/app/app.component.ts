@@ -12,12 +12,15 @@ import { auth } from 'environments/environment';
 })
 export class AppComponent {
 
-    constructor(private router: Router, private oauthService: OAuthService ) {
+    constructor(
+      private router: Router,
+      private oauthService: OAuthService
+    ) {
         this.oauthService.configure(auth);
         this.oauthService.tokenValidationHandler = new NullValidationHandler();
         this.oauthService.tryLogin();
         if (!this.oauthService.hasValidAccessToken()) {
-            this.oauthService.initImplicitFlow();
+            // this.oauthService.initImplicitFlow();
         }
     }
 

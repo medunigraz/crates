@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs/Rx';
-import 'rxjs/add/operator/switchMap';
+
 import "rxjs/add/operator/takeWhile";
 
 import { EpiphanService, Epiphan } from '../epiphan.service';
@@ -15,7 +15,7 @@ import { NotificationService, Notification } from '../../../utilities/notificati
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class EpiphanDetailComponent implements OnInit, OnDestroy{
+export class EpiphanDetailComponent implements OnInit, OnDestroy {
 
   public instance: Epiphan;
   public channels: Channel[];
@@ -24,7 +24,7 @@ export class EpiphanDetailComponent implements OnInit, OnDestroy{
   public notification: Notification;
   public notificationReceived: boolean = false;
   public contentType: ContentType;
-  private running: boolean = false;;
+  private running: boolean = false;
 
   constructor(
     private route: ActivatedRoute,

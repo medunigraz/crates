@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs/Rx';
-import 'rxjs/add/operator/switchMap';
+
 import "rxjs/add/operator/takeWhile";
 
 import { ExportService } from './export.service';

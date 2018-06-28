@@ -11,16 +11,14 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
 import { ROUTING } from './app.routing';
 
+import { AuthGuardService } from './auth-guard.service';
+
 import { BaseInterceptor, AuthInterceptor } from './app.interceptors';
 
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
-import { RecordingModule }     from './recording/recording.module';
-import { RecorderModule } from './recorder/recorder.module';
-import { PublishModule } from './publish/publish.module';
 
 @NgModule({
   declarations: [
@@ -36,12 +34,10 @@ import { PublishModule } from './publish/publish.module';
     HttpClientModule,
     ClarityModule,
     OAuthModule.forRoot(),
-    RecordingModule,
-    RecorderModule,
-    PublishModule,
     ROUTING
   ],
   providers: [
+    AuthGuardService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BaseInterceptor,

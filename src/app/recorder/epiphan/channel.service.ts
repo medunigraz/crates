@@ -20,12 +20,12 @@ export class ChannelService extends APIClient<Channel> {
   path = 'video/epiphanchannel/';
 
   start(channel: Channel) {
-    const req = new HttpRequest<Channel>('START', `${this.path}${channel.id}`, null);
+    const req = new HttpRequest<Channel>('START', `${this.path}${channel.id}/control`, null);
     return this.http.request<Channel>(req);
   }
 
   stop(channel: Channel) {
-    const req = new HttpRequest<Channel>('START', `${this.path}${channel.id}`, null);
+    const req = new HttpRequest<Channel>('START', `${this.path}${channel.id}/control`, null);
     return this.http.request<Channel>(req);
   }
 

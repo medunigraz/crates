@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { OAuthService } from 'angular-oauth2-oidc';
 
@@ -9,9 +9,9 @@ import { environment } from 'environments/environment';
 
 @Injectable()
 export class BaseInterceptor {
-  constructor() {}
-
   private absolute = new RegExp('^(?:[a-z]+:)?//', 'i');
+
+  constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.absolute.test(req.url)) {
