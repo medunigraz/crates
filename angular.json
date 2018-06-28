@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "clarity-seed": {
+    "crates": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -35,7 +35,7 @@
             ]
           },
           "configurations": {
-            "prod": {
+            "production": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -48,18 +48,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "clarity-seed:build"
+            "browserTarget": "crates:build"
           },
           "configurations": {
-            "prod": {
-              "browserTarget": "clarity-seed:build:prod"
+            "production": {
+              "browserTarget": "crates:build:prod"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "clarity-seed:build"
+            "browserTarget": "crates:build"
           }
         },
         "test": {
@@ -96,7 +96,7 @@
         }
       }
     },
-    "clarity-seed-e2e": {
+    "crates-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -105,7 +105,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.config.js",
-            "devServerTarget": "clarity-seed:serve"
+            "devServerTarget": "crates:serve"
           }
         },
         "lint": {
@@ -118,7 +118,7 @@
       }
     }
   },
-  "defaultProject": "clarity-seed",
+  "defaultProject": "crates",
   "schematics": {
     "@schematics/angular:class": {
       "spec": false
