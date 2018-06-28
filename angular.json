@@ -17,7 +17,7 @@
             "tsConfig": "src/tsconfig.json",
             "assets": [
               "src/images",
-              "src/favicon.ico"
+              "src/favicon.svg"
             ],
             "styles": [
               "node_modules/@clr/icons/clr-icons.min.css",
@@ -83,7 +83,7 @@
             },
             "assets": [
               "src/images",
-              "src/favicon.ico"
+              "src/favicon.svg"
             ]
           }
         },
