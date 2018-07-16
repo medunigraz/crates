@@ -48,20 +48,14 @@
             {{channel.name}}
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-icon btn-success" *ngIf="!channel.recording">
+            <button type="button" class="btn btn-icon btn-success" *ngIf="!channel.recording" (click)="startChannelRecording(channel)" [disabled]="channelsDirty">
                 <clr-icon shape="play"></clr-icon>
                 Start
             </button>
-            <button type="button" class="btn btn-icon btn-danger" *ngIf="channel.recording">
+            <button type="button" class="btn btn-icon btn-danger" *ngIf="channel.recording" (click)="stopChannelRecording(channel)" [disabled]="channelsDirty">
                 <clr-icon shape="stop"></clr-icon>
                 Stop
             </button>
-            <!--
-            <div class="toggle-switch">
-                <input type="checkbox" id="channel-{{channel.id}}" [checked]="channel.recording" (change)="toggleChannelRecording(channel)">
-                <label for="channel-{{channel.id}}">Recording</label>
-            </div>
-            -->
         </div>
     </div>
 </div>

@@ -25,6 +25,7 @@ export class EpiphanDetailComponent implements OnInit, OnDestroy {
   public notificationReceived: boolean = false;
   public contentType: ContentType;
   private running: boolean = false;
+  public channelsDirty: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,6 +76,8 @@ export class EpiphanDetailComponent implements OnInit, OnDestroy {
         }).subscribe((channels) => {
           console.log('channels', channels);
           this.channels = channels;
+          this.channelsDirty = false;
+
         });
         timer.switchMap(() => {
           return this.sourceService.listAll(options);
@@ -101,15 +104,18 @@ export class EpiphanDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleChannelRecording(channel: Channel) {
-    console.log(channel);
-    if (channel.recording) {
-      // this.channelService.stop(channel).subscribe((channel) => {
-      // });
-    } else {
-      // this.channelService.start(channel).subscribe((channel) => {
-      // });
-    }
+  stopChannelRecording(channel: Channel) {
+    this.channelsDirty = true;
+    this.channelService.stop(channel).subscribe((channel) => {
+      console.log('Stopping channel', channel);
+    });
+  }
+
+  startChannelRecording(channel: Channel) {
+    this.channelsDirty = true;
+    this.channelService.start(channel).subscribe((channel) => {
+      console.log('Starting channel', channel);
+    });
   }
 
   ngOnDestroy() {
