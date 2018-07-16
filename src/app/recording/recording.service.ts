@@ -5,7 +5,7 @@ import { APIClient, Item } from '../utilities/api.service';
 
 export interface Recording extends Item {
   created: Date;
-  data: string;
+  online: string;
   info: any;
   recorder: any;
   metadata?; any;
