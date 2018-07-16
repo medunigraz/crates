@@ -18,10 +18,10 @@ export interface Recording extends Item {
 @Injectable()
 export class RecordingService extends APIClient<Recording> {
 
+  path = 'video/recording/';
+
   constructor(http: HttpClient) {
     super(http);
   }
-
-  path = 'video/recording/';
 
 }

@@ -1,4 +1,4 @@
-<section class="row flex-items-xs-bottom">
+<section class="row flex-items-xs-bottom" *ngIf="instance">
     <div class="col-md-8">
         <h1>
             {{instance?.name}} in {{instance?.room?.properties.canonical}}
@@ -77,7 +77,7 @@
         </div>
     </div>
 </div>
-<clr-modal [(clrModalOpen)]="source" [clrModalSize]="'lg'">
+<clr-modal [(clrModalOpen)]="source" [clrModalSize]="'lg'" *ngIf="source">
     <div class="modal-body">
         <img src="{{source.video_preview}}" class="thumbnail">
         <img src="{{source.audio_waveform}}" class="thumbnail">
