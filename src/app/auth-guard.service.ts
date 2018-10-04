@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad } from '@angular/router';
 
-import { OAuthService, NullValidationHandler } from 'angular-oauth2-oidc';
+import { NullValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 
 import { auth } from 'environments/environment';
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { OAuthService, NullValidationHandler } from 'angular-oauth2-oidc';
+import { NullValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 
 import { auth } from 'environments/environment';
 

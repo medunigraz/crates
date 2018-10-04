@@ -1,11 +1,11 @@
 import { ModuleWithProviders } from '@angular/core/src/metadata/ng_module';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardService } from './auth-guard.service';
 
 import { AboutComponent } from './about/about.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 export const ROUTES: Routes = [

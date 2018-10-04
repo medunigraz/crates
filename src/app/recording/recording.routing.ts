@@ -1,12 +1,12 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RootComponent } from './root/root.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { OnlineComponent } from './online/online.component';
-import { DetailComponent } from './online/detail/detail.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { ArchiveDetailComponent } from './archive/detail/detail.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { DetailComponent } from './online/detail/detail.component';
+import { OnlineComponent } from './online/online.component';
+import { RootComponent } from './root/root.component';
 
 const recordingRoutes: Routes = [
   {

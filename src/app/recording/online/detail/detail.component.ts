@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 
-import { ReplaySubject, Subject } from 'rxjs/Rx';
 
-import { RecordingService, Recording } from '../../recording.service';
-import { ExportService, Export } from '../../export/export.service';
-import { AssetService, Asset } from '../../asset/asset.service';
+import { Asset, AssetService } from '../../asset/asset.service';
+import { Export, ExportService } from '../../export/export.service';
+import { Recording, RecordingService } from '../../recording.service';
 
 const sortAssets = (a, b) => {
   return a.name.localeCompare(b.name);
@@ -90,7 +89,7 @@ export class DetailComponent implements OnInit {
   }
 
   assetSelected(event) {
-    if(event.target.files && event.target.files.length > 0) {
+    if (event.target.files && event.target.files.length > 0) {
       for (let file of event.target.files) {
         file.upload = {
           sent: false,

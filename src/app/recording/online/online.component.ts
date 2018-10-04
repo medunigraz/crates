@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ClrDatagridStateInterface } from "@clr/angular";
 
-import { RecordingService, Recording } from '../recording.service';
+import { Recording, RecordingService } from '../recording.service';
 
 @Component({
   templateUrl: './online.component.html',
@@ -23,7 +23,7 @@ export class OnlineComponent {
 
   refresh(state: ClrDatagridStateInterface) {
     this.loading = true;
-    const filters:{[prop:string]: any[]} = {};
+    const filters: {[prop: string]: any[]} = {};
     if (state.filters) {
       for (let filter of state.filters) {
         let {property, value} = <{property: string, value: string}>filter;

@@ -1,8 +1,8 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ClarityModule } from '@clr/angular';
 
@@ -13,10 +13,10 @@ import { ROUTING } from './app.routing';
 
 import { AuthGuardService } from './auth-guard.service';
 
-import { BaseInterceptor, AuthInterceptor } from './app.interceptors';
+import { AuthInterceptor, BaseInterceptor } from './app.interceptors';
 
-import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 

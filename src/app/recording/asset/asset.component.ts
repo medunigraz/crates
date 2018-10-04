@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { DownloadService } from '../../utilities/api.service';
-import { AssetService, Asset } from './asset.service';
+import { Asset, AssetService } from './asset.service';
 
 @Component({
   selector: 'asset',

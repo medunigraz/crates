@@ -1,21 +1,36 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 
-import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs/Rx';
+import {
+  timer,
+  ReplaySubject
+} from 'rxjs';
+import {
+  concat,
+  filter,
+  multicast,
+  share,
+  switchMap,
+  take,
+  takeWhile
+} from 'rxjs/operators';
 
-import "rxjs/add/operator/takeWhile";
-
+import { Task, TaskService } from '../../utilities/task.service';
 import { ExportService } from './export.service';
-import { TaskService, Task } from '../../utilities/task.service';
 
 @Component({
   selector: 'recording-export',
   templateUrl: './export.component.html',
   styleUrls: ['./export.component.scss'],
-  host: {
-    class: 'col-xs-12 col-md-3'
-  }
 })
-export class ExportComponent implements OnInit {
+export class ExportComponent implements OnInit, OnDestroy {
+
+  @HostBinding('class') classes = 'col-xs-12 col-md-3';
 
   @Input() exporter: any;
   @Input() recording: any;
@@ -49,17 +64,37 @@ export class ExportComponent implements OnInit {
   }
 
   sendRequest() {
-    const request = this.exportService.schedule(this.exporter.id, this.recording.id)
-      .switchMap((data) => {
-        return Observable.timer(0, 1000).switchMap(() => this.taskService.get(data.task));
-      }).takeWhile(() => this.running).share();
-    const state = request.multicast(
-      () => new ReplaySubject(1),
-      (states) => states.takeWhile((data: Task) => { console.log(data); return !this.endStates.includes(data.state)}).concat(states.take(1))
-    ).share();
+    const request = this.exportService.schedule(this.exporter.id, this.recording.id).pipe(
+      switchMap((data) => {
+        return timer(0, 1000).pipe(
+          switchMap(() => this.taskService.get(data.task))
+        );
+      }),
+      takeWhile(() => this.running),
+      share()
+    );
+    const state = request.pipe(
+      multicast(
+        () => new ReplaySubject(1),
+        (states) => states.pipe(
+          takeWhile((data: Task) => {
+            console.log(data);
+            return !this.endStates.includes(data.state)
+          }),
+          concat(states.pipe(
+            take(1)
+          ))
+        )
+      ),
+      share()
+    );
     // takeUntil(request.filter(data => this.endStates.includes(data.state))).share();
-    state.filter((data: Task) => this.runStates.includes(data.state)).subscribe(this.progress$);
-    state.filter((data: Task) => this.endStates.includes(data.state)).subscribe(this.progress$);
+    state.pipe(
+      filter((data: Task) => this.runStates.includes(data.state))
+    ).subscribe(this.progress$);
+    state.pipe(
+      filter((data: Task) => this.endStates.includes(data.state))
+    ).subscribe(this.progress$);
     state.subscribe(data => console.log(data));
   }
 

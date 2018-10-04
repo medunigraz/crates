@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule }    from '@angular/forms';
 
 import { ClarityModule } from '@clr/angular';
 
 import { UtilitiesModule } from '../utilities/utilities.module';
 
-import { RootComponent } from './root/root.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { RootComponent } from './root/root.component';
 
 import { PublishRoutingModule } from './publish.routing';
 

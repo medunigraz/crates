@@ -14,11 +14,11 @@ export class ReadableTimePipe implements PipeTransform {
     'PB'
   ];
 
-  transform(duration: number = 0) : string {
-    let milliseconds = Math.floor((duration%1000)/100);
-    let seconds = Math.floor((duration/1000)%60);
-    let minutes = Math.floor((duration/(1000*60))%60);
-    let hours = Math.floor((duration/(1000*60*60))%24);
+  transform(duration: number = 0): string {
+    let milliseconds = Math.floor((duration % 1000) / 100);
+    let seconds = Math.floor((duration / 1000) % 60);
+    let minutes = Math.floor((duration / (1000 * 60)) % 60);
+    let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
     hours = (hours < 10) ? 0 + hours : hours;
     minutes = (minutes < 10) ? 0 + minutes : minutes;

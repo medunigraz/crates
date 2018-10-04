@@ -1,7 +1,26 @@
+import {
+  HttpClient,
+  HttpEventType,
+  HttpHeaderResponse,
+  HttpParams,
+  HttpProgressEvent,
+  HttpRequest,
+  HttpResponse,
+  HttpSentEvent
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEvent, HttpEventType, HttpParams, HttpProgressEvent, HttpSentEvent, HttpHeaderResponse, HttpResponse } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Rx';
+import {
+  empty,
+  Observable
+} from 'rxjs';
+import {
+  expand,
+  filter,
+  map,
+  reduce,
+  share
+} from 'rxjs/operators';
 
 export interface ListOptions {
   size?: number | string;
@@ -40,13 +59,25 @@ export class DownloadService {
       reportProgress: true,
       responseType: 'blob'
     });
-    const stream = this.http.request<Blob>(req).share();
+    const stream = this.http.request<Blob>(req).pipe(
+      share()
+    );
     const endpoints: EventResponse<Blob> = {
-      sent: stream.filter((event) => { return event.type === HttpEventType.Sent; }) as Observable<HttpSentEvent>,
-      upload: stream.filter((event) => { return event.type === HttpEventType.UploadProgress; }) as Observable<HttpProgressEvent>,
-      headers: stream.filter((event) => { return event.type === HttpEventType.ResponseHeader; }) as Observable<HttpHeaderResponse>,
-      download: stream.filter((event) => { return event.type === HttpEventType.DownloadProgress; }) as Observable<HttpProgressEvent>,
-      response: stream.filter((event) => { return event.type === HttpEventType.Response; }) as Observable<HttpResponse<Blob>>
+      sent: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.Sent; })
+      ) as Observable<HttpSentEvent>,
+      upload: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.UploadProgress; })
+      ) as Observable<HttpProgressEvent>,
+      headers: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.ResponseHeader; })
+      ) as Observable<HttpHeaderResponse>,
+      download: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.DownloadProgress; })
+      ) as Observable<HttpProgressEvent>,
+      response: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.Response; })
+      ) as Observable<HttpResponse<Blob>>
     };
     return endpoints;
   }
@@ -69,8 +100,8 @@ export abstract class APIClient<T extends Item> {
         params = params.append('offset', String(options.offset));
       }
       if (options.filters) {
-        for (let filter in options.filters) {
-          params = params.append(filter, String(options.filters[filter]));
+        for (const f of Object.keys(options.filters)) {
+          params = params.append(f, String(options.filters[f]));
         }
       }
     }
@@ -80,7 +111,7 @@ export abstract class APIClient<T extends Item> {
   listAll(filters: any) {
 
     const getRange = (offset?: number | string, limit?: number | string) => {
-      //console.log(`loading items with range ${offset}:${limit}`);
+      // console.log(`loading items with range ${offset}:${limit}`);
 
       const options: ListOptions = {
         filters: filters
@@ -95,20 +126,24 @@ export abstract class APIClient<T extends Item> {
       return this.list(options);
     };
 
-    return getRange().expand((res) => {
-      //console.log(res);
-      if (res.next) {
-        const params = new URLSearchParams(res.next as string);
-        return getRange(params.get('offset'), params.get('limit'));
-      } else {
-        return Observable.empty();
-      }
-    }).map((res) => {
-      const items = res.results;
-      //console.log(`received ${items.length}`);
-      //console.log(JSON.stringify(items));
-      return Array.prototype.concat.apply([], items.map(array => array));
-    }).reduce((acc, x) => acc.concat(x), []);
+    return getRange().pipe(
+      expand((res) => {
+        // console.log(res);
+        if (res.next) {
+          const params = new URLSearchParams(res.next as string);
+          return getRange(params.get('offset'), params.get('limit'));
+        } else {
+          return empty();
+        }
+      }),
+      map((res) => {
+        const items = res.results;
+        // console.log(`received ${items.length}`);
+        // console.log(JSON.stringify(items));
+        return Array.prototype.concat.apply([], items.map(array => array));
+      }),
+      reduce((acc, x) => acc.concat(x), [])
+    );
   }
 
   get(id: string | number) {
@@ -119,13 +154,25 @@ export abstract class APIClient<T extends Item> {
     const req = new HttpRequest<T>('POST', this.path, item, {
       reportProgress: true
     });
-    const stream = this.http.request<T>(req).share();
+    const stream = this.http.request<T>(req).pipe(
+      share()
+    );
     const endpoints: EventResponse<T> = {
-      sent: stream.filter((event) => { return event.type === HttpEventType.Sent; }) as Observable<HttpSentEvent>,
-      upload: stream.filter((event) => { return event.type === HttpEventType.UploadProgress; }) as Observable<HttpProgressEvent>,
-      headers: stream.filter((event) => { return event.type === HttpEventType.ResponseHeader; }) as Observable<HttpHeaderResponse>,
-      download: stream.filter((event) => { return event.type === HttpEventType.DownloadProgress; }) as Observable<HttpProgressEvent>,
-      response: stream.filter((event) => { return event.type === HttpEventType.Response; }) as Observable<HttpResponse<T>>
+      sent: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.Sent; })
+      ) as Observable<HttpSentEvent>,
+      upload: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.UploadProgress; })
+      ) as Observable<HttpProgressEvent>,
+      headers: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.ResponseHeader; })
+      ) as Observable<HttpHeaderResponse>,
+      download: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.DownloadProgress; })
+      ) as Observable<HttpProgressEvent>,
+      response: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.Response; })
+      ) as Observable<HttpResponse<T>>
     };
     return endpoints;
   }
@@ -134,13 +181,25 @@ export abstract class APIClient<T extends Item> {
     const req = new HttpRequest<T>('PUT', `${this.path}${item.id}/`, item, {
       reportProgress: true
     });
-    const stream = this.http.request<T>(req).share();
+    const stream = this.http.request<T>(req).pipe(
+      share()
+    );
     const endpoints: EventResponse<T> = {
-      sent: stream.filter((event) => { return event.type === HttpEventType.Sent; }) as Observable<HttpSentEvent>,
-      upload: stream.filter((event) => { return event.type === HttpEventType.UploadProgress; }) as Observable<HttpProgressEvent>,
-      headers: stream.filter((event) => { return event.type === HttpEventType.ResponseHeader; }) as Observable<HttpHeaderResponse>,
-      download: stream.filter((event) => { return event.type === HttpEventType.DownloadProgress; }) as Observable<HttpProgressEvent>,
-      response: stream.filter((event) => { return event.type === HttpEventType.Response; }) as Observable<HttpResponse<T>>
+      sent: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.Sent; })
+      ) as Observable<HttpSentEvent>,
+      upload: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.UploadProgress; })
+      ) as Observable<HttpProgressEvent>,
+      headers: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.ResponseHeader; })
+      ) as Observable<HttpHeaderResponse>,
+      download: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.DownloadProgress; })
+      ) as Observable<HttpProgressEvent>,
+      response: stream.pipe(
+        filter((event) => { return event.type === HttpEventType.Response; })
+      ) as Observable<HttpResponse<T>>
     };
     return endpoints;
   }

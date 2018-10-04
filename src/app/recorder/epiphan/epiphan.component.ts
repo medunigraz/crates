@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ClrDatagridStateInterface } from "@clr/angular";
 
-import { EpiphanService, Epiphan } from './epiphan.service';
+import { Epiphan, EpiphanService } from './epiphan.service';
 
 @Component({
   templateUrl: './epiphan.component.html',

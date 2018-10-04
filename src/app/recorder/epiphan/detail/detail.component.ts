@@ -1,15 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
-import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs/Rx';
+import {
+  timer
+} from 'rxjs';
+import {
+  share,
+  switchMap,
+  takeWhile
+} from 'rxjs/operators';
 
-import "rxjs/add/operator/takeWhile";
-
-import { EpiphanService, Epiphan } from '../epiphan.service';
-import { ChannelService, Channel } from '../channel.service';
-import { SourceService, Source } from '../source.service';
-import { ContentTypeService, ContentType } from '../../../utilities/content-type.service';
-import { NotificationService, Notification } from '../../../utilities/notification.service';
+import { ContentType, ContentTypeService } from '../../../utilities/content-type.service';
+import { Notification, NotificationService } from '../../../utilities/notification.service';
+import { Channel, ChannelService } from '../channel.service';
+import { Epiphan, EpiphanService } from '../epiphan.service';
+import { Source, SourceService } from '../source.service';
 
 @Component({
   templateUrl: './detail.component.html',
@@ -70,18 +75,25 @@ export class EpiphanDetailComponent implements OnInit, OnDestroy {
         const options = {
           epiphan: this.instance.id
         }
-        const timer = Observable.timer(0, 10000).takeWhile(() => this.running).share();
-        timer.switchMap(() => {
-          return this.channelService.listAll(options);
-        }).subscribe((channels) => {
+        const t = timer(0, 10000).pipe(
+          takeWhile(() => this.running),
+          share()
+        );
+        t.pipe(
+          switchMap(() => {
+            return this.channelService.listAll(options);
+          })
+        ).subscribe((channels) => {
           console.log('channels', channels);
           this.channels = channels;
           this.channelsDirty = false;
 
         });
-        timer.switchMap(() => {
-          return this.sourceService.listAll(options);
-        }).subscribe((sources) => {
+        t.pipe(
+          switchMap(() => {
+            return this.sourceService.listAll(options);
+          })
+        ).subscribe((sources) => {
           console.log('sources', sources);
           this.sources = sources;
         });
@@ -106,15 +118,15 @@ export class EpiphanDetailComponent implements OnInit, OnDestroy {
 
   stopChannelRecording(channel: Channel) {
     this.channelsDirty = true;
-    this.channelService.stop(channel).subscribe((channel) => {
-      console.log('Stopping channel', channel);
+    this.channelService.stop(channel).subscribe((c) => {
+      console.log('Stopping channel', c);
     });
   }
 
   startChannelRecording(channel: Channel) {
     this.channelsDirty = true;
-    this.channelService.start(channel).subscribe((channel) => {
-      console.log('Starting channel', channel);
+    this.channelService.start(channel).subscribe((c) => {
+      console.log('Starting channel', c);
     });
   }
 
