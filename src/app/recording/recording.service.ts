@@ -8,7 +8,7 @@ export interface Recording extends Item {
   online: string;
   info: any;
   recorder: any;
-  metadata?; any;
+  metadata?: any;
   start?: string;
   end?: string;
   course?: any | null;
